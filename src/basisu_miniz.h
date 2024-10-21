@@ -349,10 +349,11 @@ typedef int mz_bool;
 
 // An attempt to work around MSVC's spammy "warning C4127: conditional expression is constant" message.
 #ifdef _MSC_VER
-   #define MZ_MACRO_END while (0, 0)
-#else
-   #define MZ_MACRO_END while (0)
+// Note: the previous hack replaced that warning with: warning C4548: expression before comma has no effect; expected expression with side-effect.
+// Now we simply disable the benign MSVC warning when we travel through here.
+#pragma warning(disable: 4127)
 #endif
+#define MZ_MACRO_END while (0)
 
 // ------------------- Low-level Decompression API Definitions
 
